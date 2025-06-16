@@ -6,8 +6,9 @@ import { Players } from "@rbxts/services";
 @Group("Moderation")
 class ModerationCommands {
 	@Command({
-		name: "Ban",
-		description: "Ban a player from the game",
+		name: "TempBan",
+		description: "Ban a player temporaily from the game",
+		aliases: ["Ban", "TimeBan"],
 		arguments: [
 			{
 				name: "Player",
@@ -16,7 +17,7 @@ class ModerationCommands {
 			},
 			{
 				name: "Duration",
-				description: "The duration of the ban (-1 for permanent ban)",
+				description: "The duration of the ban",
 				type: CenturionType.Duration,
 			},
 			{
@@ -28,18 +29,69 @@ class ModerationCommands {
 		],
 	})
 	@Guard(IsAdminGuard)
-	Ban(ctx: CommandContext, player: Player, duration: -1, reason: "No reason provided") {
+	Ban(ctx: CommandContext, player: Player, duration: number, reason: "No reason provided") {
 		Players.BanAsync({
 			UserIds: [player.UserId],
 			ApplyToUniverse: true,
 			Duration: duration,
-			DisplayReason: `You have been banned from ${ctx.executor.Name}`,
+			DisplayReason: `You have been banned from ${ctx.executor.Name} for ${duration} seconds.`,
 			PrivateReason: `Reason: ${reason}`,
 		});
-		if (duration === -1) {
-			ctx.reply(`Successfully banned ${player.Name} permanently. Reason: ${reason}`);
-		}
-		ctx.reply(`Successfully banned ${player.Name} for ${duration}. Reason: ${reason}`);
+		ctx.reply(`Successfully banned ${player.Name} for ${duration} seconds. Reason: ${reason}`);
+	}
+	@Command({
+		name: "PermanentBan",
+		description: "Ban a player from the game",
+		aliases: ["pBan", "permBan", "permaBan"],
+		arguments: [
+			{
+				name: "Player",
+				description: "Player to ban",
+				type: CenturionType.Player,
+			},
+			{
+				name: "Reason",
+				description: "The reason of the ban",
+				type: CenturionType.String,
+				optional: true,
+			},
+		],
+	})
+	@Guard(IsAdminGuard)
+	PermanentBan(ctx: CommandContext, player: Player, reason: "No reason provided") {
+		Players.BanAsync({
+			UserIds: [player.UserId],
+			ApplyToUniverse: true,
+			Duration: -1,
+			DisplayReason: `You have been banned permanently from ${ctx.executor.Name}`,
+			PrivateReason: `Reason: ${reason}`,
+		});
+		ctx.reply(`Successfully banned ${player.Name} permanently. Reason: ${reason}`);
+	}
+	@Command({
+		name: "Unban",
+		description: "Unban a player from the game",
+		arguments: [
+			{
+				name: "Player",
+				description: "Player to ban",
+				type: CenturionType.Player,
+			},
+			{
+				name: "Reason",
+				description: "The reason of the ban",
+				type: CenturionType.String,
+				optional: true,
+			},
+		],
+	})
+	@Guard(IsAdminGuard)
+	Unban(ctx: CommandContext, player: Player, reason: "No reason provided") {
+		Players.UnbanAsync({
+			UserIds: [player.UserId],
+			ApplyToUniverse: true,
+		});
+		ctx.reply(`Successfully banned ${player.Name} permanently. Reason: ${reason}`);
 	}
 	@Command({
 		name: "Kick",
