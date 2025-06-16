@@ -74,14 +74,8 @@ class ModerationCommands {
 		arguments: [
 			{
 				name: "Player",
-				description: "Player to ban",
+				description: "Player to unban",
 				type: CenturionType.Player,
-			},
-			{
-				name: "Reason",
-				description: "The reason of the ban",
-				type: CenturionType.String,
-				optional: true,
 			},
 		],
 	})
