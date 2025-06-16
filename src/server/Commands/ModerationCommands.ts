@@ -80,7 +80,7 @@ class ModerationCommands {
 		],
 	})
 	@Guard(IsAdminGuard)
-	Unban(ctx: CommandContext, player: Player, reason: "No reason provided") {
+	Unban(ctx: CommandContext, player: Player) {
 		Players.UnbanAsync({
 			UserIds: [player.UserId],
 			ApplyToUniverse: true,
