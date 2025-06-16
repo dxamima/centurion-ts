@@ -85,7 +85,7 @@ class ModerationCommands {
 			UserIds: [player.UserId],
 			ApplyToUniverse: true,
 		});
-		ctx.reply(`Successfully banned ${player.Name} permanently. Reason: ${reason}`);
+		ctx.reply(`Successfully unbanned ${player.Name}`);
 	}
 	@Command({
 		name: "Kick",
