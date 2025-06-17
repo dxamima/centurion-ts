@@ -29,7 +29,7 @@ class ModerationCommands {
 		],
 	})
 	@Guard(IsAdminGuard)
-	Ban(ctx: CommandContext, player: Player, duration: number, reason: "No reason provided") {
+	Ban(ctx: CommandContext, player: Player, duration: number, reason: string) {
 		Players.BanAsync({
 			UserIds: [player.UserId],
 			ApplyToUniverse: true,
@@ -42,7 +42,7 @@ class ModerationCommands {
 	@Command({
 		name: "PermanentBan",
 		description: "Ban a player from the game",
-		aliases: ["pBan", "permBan", "permaBan"],
+		aliases: ["pBan"],
 		arguments: [
 			{
 				name: "Player",
@@ -58,7 +58,7 @@ class ModerationCommands {
 		],
 	})
 	@Guard(IsAdminGuard)
-	PermanentBan(ctx: CommandContext, player: Player, reason: "No reason provided") {
+	PermanentBan(ctx: CommandContext, player: Player, reason: string) {
 		Players.BanAsync({
 			UserIds: [player.UserId],
 			ApplyToUniverse: true,
@@ -105,7 +105,7 @@ class ModerationCommands {
 		],
 	})
 	@Guard(IsAdminGuard)
-	Kick(ctx: CommandContext, player: Player, reason: "No reason provided") {
+	Kick(ctx: CommandContext, player: Player, reason: string) {
 		player.Kick(
 			`You have been kicked from the server by ${ctx.executor.Name}. Reason: ${reason}. You can rejoin the server.`,
 		);
