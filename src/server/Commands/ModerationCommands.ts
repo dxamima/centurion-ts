@@ -8,7 +8,6 @@ class ModerationCommands {
 	@Command({
 		name: "TempBan",
 		description: "Ban a player temporaily from the game",
-		aliases: ["Ban", "TimeBan"],
 		arguments: [
 			{
 				name: "Player",
@@ -29,7 +28,7 @@ class ModerationCommands {
 		],
 	})
 	@Guard(IsAdminGuard)
-	Ban(ctx: CommandContext, player: Player, duration: number, reason: string) {
+	TempBan(ctx: CommandContext, player: Player, duration: number, reason: string) {
 		Players.BanAsync({
 			UserIds: [player.UserId],
 			ApplyToUniverse: true,
@@ -40,9 +39,8 @@ class ModerationCommands {
 		ctx.reply(`Successfully banned ${player.Name} for ${duration} seconds. Reason: ${reason}`);
 	}
 	@Command({
-		name: "PermanentBan",
+		name: "pBan",
 		description: "Ban a player from the game",
-		aliases: ["pBan"],
 		arguments: [
 			{
 				name: "Player",
@@ -58,7 +56,7 @@ class ModerationCommands {
 		],
 	})
 	@Guard(IsAdminGuard)
-	PermanentBan(ctx: CommandContext, player: Player, reason: string) {
+	pBan(ctx: CommandContext, player: Player, reason: string) {
 		Players.BanAsync({
 			UserIds: [player.UserId],
 			ApplyToUniverse: true,

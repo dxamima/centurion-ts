@@ -1,7 +1,9 @@
 import { Centurion } from "@rbxts/centurion";
 import { CenturionUI } from "@rbxts/centurion-ui";
 
-const client = Centurion.client();
+const client = Centurion.client({
+	shortcutsEnabled: true,
+});
 
 client
 	.start()
